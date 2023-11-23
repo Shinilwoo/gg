@@ -5,9 +5,8 @@ from .models import Photo
 
 @login_required
 def photo_list(request):
-    photos = Photo.objects.all()
-    return render(request,'photo/list.html', {'photos':photos})
-
+    user_photos = Photo.objects.filter(author=request.user)
+    return render(request, 'photo/list.html', {'user_photos': user_photos})
 class PhotoUploadView(CreateView):
     model = Photo
     fields = ['photo','text']
