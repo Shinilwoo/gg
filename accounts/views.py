@@ -1,8 +1,14 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect
 from .forms import RegisterForm
 from polls.models import Quiz, UserAnswer
 from django.utils import timezone
-
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+@login_required(login_url=None)
+def custom_logout(request):
+    logout(request)
+    return redirect('/')
 
 def register(request):
 
