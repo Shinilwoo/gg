@@ -1,3 +1,4 @@
+import unicodedata
 from django.shortcuts import render, get_object_or_404,redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -24,6 +25,9 @@ def index(request):
     latest_quiz_list = Quiz.objects.all().order_by('-id')[:5]
     context = {'latest_quiz_list': latest_quiz_list}
     return render(request, 'polls/index.html', context)
+
+def normalize_text(text):
+    return unicodedata.normalize('NFKD', text.casefold())
 
 @login_required(login_url='/polls/')
 def check_answer(request, quiz_id):

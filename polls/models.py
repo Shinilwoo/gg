@@ -13,20 +13,22 @@ class Quiz(models.Model):
 
     def check_answer(self, user_answer):
         if self.is_text_answer:
-            correct_answer = self.answers.filter(is_correct=True).first()
+            correct_answer = self.answers.filter(is_correct=True)
             #return user_answer.lower() == datetime.now().strftime('%Y-%m-%d').lower()
-            if correct_answer:
-                return user_answer.lower() == correct_answer.text.lower()
-            else:
-                return False
+            #if correct_answer:
+            #    return user_answer.lower() == correct_answer.text.lower()
+            #else:
+            #    return False
+            return user_answer.lower() in [answer.text.lower() for answer in correct_answer]
         #elif self.is_date_answer:
         #    # 날짜 응답을 날짜 형식으로 변환
         #    user_date = datetime.now().date()
         #    correct_date = self.answers.filter(is_correct=True).first().date_answered.date() if self.answers.filter(is_correct=True).first() else None
         #    return user_date == correct_date if correct_date else False
         else:
-            correct_answer = self.answers.filter(is_correct=True).first()
-            return user_answer.lower() == correct_answer.text.lower() if correct_answer else False
+            correct_answer = self.answers.filter(is_correct=True)
+            #return user_answer.lower() == correct_answer.text.lower() if correct_answer else False
+            return user_answer.lower() in [answer.text.lower() for answer in correct_answer] if correct_answer else False
             #pass
 class Answer(models.Model):
     text = models.CharField(max_length=100)
