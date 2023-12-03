@@ -21,10 +21,16 @@
                 {% if user.is_authenticated %}
                 <li class="nav-item"><a href="{% url 'polls:index' %}" class="nav-link">퀴즈 풀기,{{user.get_username}}님</a></li>
                 <li class="nav-item"><a href="{% url 'photo:photo_upload' %}" class="nav-link">사진 올리기</a></li>
+                <li class="nav-item"><a href="{% url 'user_profile' user.id %}" class="nav-link">내 프로필</a></li>
                 <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">로그아웃</a></li>
                 {% else %}
                 <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">로그인</a></li>
                 <li class="nav-item"><a href="{% url 'register' %}" class="nav-link">회원가입</a></li>
+                {% endif %}
+                {% if user.is_authenticated %}
+                    {% if user.user_profile.is_special_user %}
+                        <li class="nav-item"><a href="{% url 'user_list' %}" class="nav-link">회원 목록</a></li>
+                    {% endif %}
                 {% endif %}
             </ul>
         </nav>
